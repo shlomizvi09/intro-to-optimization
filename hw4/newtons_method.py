@@ -17,7 +17,7 @@ def newtons_method(x: np.ndarray, function=None):
         x = x + alpha * direction
         solution_path.append(x)
         gradient = function.gradient(x)
-    return solution_path[-1]
+    return solution_path
 
 
 def get_newton_direction(A, b):  # perform LDL decomposition on Ax = b system
@@ -48,7 +48,7 @@ def get_inexact_step_size(f, alpha: float, x: np.ndarray,
                           direction: np.ndarray) -> float:
     beta = 0.5
     sigma = 0.25
-    c = f.gradient(x).T @ direction
+    c = (f.gradient(x).T @ direction)[0, 0]
     threshold = sigma * c
     while threshold * alpha <= f(x + alpha * direction) - f(x):
         alpha *= beta
